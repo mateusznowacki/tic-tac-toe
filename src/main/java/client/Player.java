@@ -1,16 +1,17 @@
 package client;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @RequiredArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Player {
-    @NonNull
-    private int id;
-    @NonNull
-    private String name;
-    private int matchId;
 
+    private final int id;
+    private final String name;
+    private int matchId;
 
 
 }
