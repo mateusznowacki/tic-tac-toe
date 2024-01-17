@@ -1,5 +1,7 @@
 package server.io;
 
+import server.model.Player;
+
 public class ConsolePrinter {
     public static void printStartInfo(String address) {
         System.out.println("Host adress: " + address);
@@ -26,6 +28,11 @@ public class ConsolePrinter {
 
     public static void printPlayerInfo(String name) {
         System.out.println("Player " + name + " joined the server");
+    }
+
+    public static void printWinInfo(Player player1, Player player2) {
+        System.out.println("Player " + player1.getName() + " won the match against " + player2.getName());
+        System.out.println("Player " + player1.getName() + " has " + player1.getWins() + " wins");
     }
 
 

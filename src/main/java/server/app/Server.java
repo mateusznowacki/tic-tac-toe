@@ -16,10 +16,10 @@ public class Server {
         try {
             Registry registry = LocateRegistry.createRegistry(1099);
             InetAddress serverAddress = InetAddress.getByName("localhost");
-            printStartInfo(serverAddress.getHostAddress());
 
             TicTacToeGame game = new TicTacToeGame();
             Naming.rebind("TicTacToe", game);
+            printStartInfo(serverAddress.getHostAddress());
 
         } catch (Exception e) {
             printAppCrashInfo(e);

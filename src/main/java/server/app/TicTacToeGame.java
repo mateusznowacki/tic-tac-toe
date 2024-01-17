@@ -18,37 +18,19 @@ public class TicTacToeGame extends UnicastRemoteObject implements TicTacToeServi
     }
 
     @Override
-    public int addPlayer(String name) throws RemoteException {
-        return 0;
+    public void registerPlayer(String name, int id) throws RemoteException {
+        players.add(new Player(id, name));
     }
 
     @Override
-    public int endMatch(int id) throws RemoteException {
-        return 0;
+    public void deletePlayer(int id) throws RemoteException {
+        players.removeIf(player -> player.getId() == id);
+
     }
 
     @Override
-    public int hasMatch(int id) throws RemoteException {
-        return 0;
-    }
+    public void makeMove(int matchId,int playerId, int row, int column) throws RemoteException {
+       matches.get(matchId).makeMove(row,column, playerId);
 
-    @Override
-    public String getOpponent(int id) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public int isMyTurn(int id) throws RemoteException {
-        return 0;
-    }
-
-    @Override
-    public String getBoard(int id) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public int move(int playerId, int row, int column) throws RemoteException {
-        return 0;
     }
 }
