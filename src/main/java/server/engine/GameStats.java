@@ -1,20 +1,18 @@
 package server.engine;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import server.model.Player;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 @Setter
 @Getter
 public class GameStats {
     private static GameStats instance;
 
-    private HashMap<Integer, Integer> playerWins = new HashMap<>();
-    private HashMap<Integer, Integer> playerLosses = new HashMap<>();
-    private HashMap<Integer, Integer> playerDraws = new HashMap<>();
-
+    ArrayList<Match> matches = new ArrayList<>();
+    ArrayList<Player> players = new ArrayList<>();
 
     private GameStats() {
     }

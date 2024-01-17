@@ -9,7 +9,7 @@ public class ConsolePrinter {
         System.out.println("TicTacToe server ready!");
     }
 
-    public static void printAppCrashInfo(Exception e){
+    public static void printAppCrashInfo(Exception e) {
         System.err.println("TicTacToe server failed!");
         System.err.println(e.getMessage());
     }
@@ -35,5 +35,8 @@ public class ConsolePrinter {
         System.out.println("Player " + player1.getName() + " has " + player1.getWins() + " wins");
     }
 
+    public static void printMatchDraw() {
+        System.out.println("Match ended with a draw");
+    }
 
 }

@@ -1,24 +1,19 @@
 package client;
 
+import server.engine.Match;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface TicTacToeService extends Remote {
-    int joinGame(String playerName) throws RemoteException;
+    void registerPlayer(String name ) throws RemoteException;
+    void deletePlayer (int id) throws RemoteException;
 
-    // Metoda do wykonania ruchu przez gracza
-    int makeMove(int gameId, int row, int column, String playerName) throws RemoteException;
+    void makeMove (int matchId,int playerId, int row, int column) throws RemoteException;
 
-    // Metoda do pobrania aktualnego stanu planszy
-    String getBoard(int gameId) throws RemoteException;
+    void createMatch (Player player1, Player player2) throws RemoteException;
+    void deleteMatch (int matchId) throws RemoteException;
 
-    // Metoda do sprawdzenia, czyja kolejka do ruchu
-    String getCurrentPlayer(int gameId) throws RemoteException;
-
-    // Metoda do sprawdzenia statusu gry (wygrana, remis, czyja kolejka)
-    String getGameStatus(int gameId) throws RemoteException;
-
-    // Metoda do opuszczenia gry
-    void leaveGame(int gameId, String playerName) throws RemoteException;
+    Match getMatch (int matchId) throws RemoteException;
 }
 

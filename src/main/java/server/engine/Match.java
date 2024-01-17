@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import server.model.Player;
 
+import static server.io.ConsolePrinter.printMatchDraw;
 import static server.io.ConsolePrinter.printWinInfo;
 
 
@@ -14,9 +15,10 @@ public class Match {
     @NonNull
     private Player player1, player2;
     @NonNull
-    private int id;
+    private int matchId;
     private Player currentPlayer;
     private boolean isDraw = false;
+    private boolean isRunning = true;
 
 
     private char[][] board = new char[3][3];
@@ -29,22 +31,41 @@ public class Match {
     public Match(@NonNull Player player1, @NonNull Player player2, @NonNull int id) {
         this.player1 = player1;
         this.player2 = player2;
-        this.id = id;
+        this.matchId = id;
         initializeMatch();
     }
 
+
+
     public void getWinner() {
-        if ((board[0][0] == PLAYER1_MARK && board[0][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK) || (board[1][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[1][2] == PLAYER1_MARK) || (board[2][0] == PLAYER1_MARK && board[2][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) || (board[0][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) || (board[2][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK)) {
+        if ((board[0][0] == PLAYER1_MARK && board[0][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK) ||
+                (board[1][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[1][2] == PLAYER1_MARK) ||
+                (board[2][0] == PLAYER1_MARK && board[2][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) ||
+                (board[0][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) ||
+                (board[2][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK)) {
+            isRunning = true;
             player1.addWin();
+            player2.addLoss();
             player1.setWinner(true);
+            setCurrentGameState();
 
-        } else if ((board[0][0] == PLAYER2_MARK && board[0][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK) || (board[1][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[1][2] == PLAYER2_MARK) || (board[2][0] == PLAYER2_MARK && board[2][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) || (board[0][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) || (board[2][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK)) {
+        } else if ((board[0][0] == PLAYER2_MARK && board[0][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK) ||
+                (board[1][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[1][2] == PLAYER2_MARK) ||
+                (board[2][0] == PLAYER2_MARK && board[2][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) ||
+                (board[0][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) ||
+                (board[2][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK)) {
+            isRunning = true;
             player2.addWin();
+            player1.addLoss();
             player2.setWinner(true);
+            setCurrentGameState();
 
-        } else if (true) {
-
+        } else if (player1.isWinner() == false && player2.isWinner() == false && isDraw() == true) {
+            isRunning = true;
             isDraw = true;
+            player1.addDraw();
+            player2.addDraw();
+            setCurrentGameState();
         }
 
     }
@@ -66,19 +87,19 @@ public class Match {
         }
         checkWinner();
         if (player1.isWinner() == false || player2.isWinner() == false || isDraw == false) {
-            getCurrentGameState();
             notifyNextPlayer();
+        } else if (isDraw == true) {
+            printMatchDraw();
         }
     }
 
     private void notifyNextPlayer() {
-//
-//        String nextPlayer = (currentPlayer == 'X') ? "Player1" : "Player2";
-//        players.get(nextPlayer).notify("Your turn.");
+        //TODO: implementacja powiadomienia gracza
+        System.out.println("Next turn.");
     }
 
-    private Match getCurrentGameState() {
-        return this;
+    private void setCurrentGameState() {
+
     }
 
     private void checkWinner() {
@@ -113,6 +134,22 @@ public class Match {
         player2.setWinner(false);
     }
 
+    private boolean isDraw() {
+        //sprawdzam puste pola
+        int emptyFields = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == EMPTY_MARK) {
+                    emptyFields++;
+                }
+            }
+        }
+        if (emptyFields == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 
