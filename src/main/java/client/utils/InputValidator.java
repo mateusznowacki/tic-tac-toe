@@ -1,4 +1,4 @@
-package client;
+package client.utils;
 
 public class InputValidator {
 

@@ -1,20 +1,14 @@
-package server.model;
-
+package client.model;
 
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
-@RequiredArgsConstructor
 @Getter
 @Setter
 public class Player {
-    @NonNull
-    private final int id;
-    @NonNull
-    private final String name;
+    private static Player instance;
+    private int id;
+    private String name;
     private int matchId;
     private int wins = 0;
     private int losses = 0;
@@ -31,5 +25,16 @@ public class Player {
 
     public void addDraw() {
         draws++;
+    }
+
+    private Player() {
+
+    }
+
+    public static synchronized Player getInstance() {
+        if (instance == null) {
+            instance = new Player();
+        }
+        return instance;
     }
 }

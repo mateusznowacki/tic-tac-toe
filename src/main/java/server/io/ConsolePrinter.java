@@ -39,4 +39,9 @@ public class ConsolePrinter {
         System.out.println("Match ended with a draw");
     }
 
+    public static void printPlayerAddInfo(String name, int id) {
+        System.out.println("Player " + name + " joined the server, his id:" + id);
+    }
+
+
 }

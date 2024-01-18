@@ -1,5 +1,8 @@
 package server.app;
 
+
+import shared.TicTacToeService;
+
 import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -17,9 +20,10 @@ public class Server {
             Registry registry = LocateRegistry.createRegistry(1099);
             InetAddress serverAddress = InetAddress.getByName("localhost");
 
-            TicTacToeGame game = new TicTacToeGame();
+            TicTacToeService game = new TicTacToeServer();
             Naming.rebind("TicTacToe", game);
             printStartInfo(serverAddress.getHostAddress());
+
 
         } catch (Exception e) {
             printAppCrashInfo(e);

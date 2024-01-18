@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import server.model.Player;
 
+
+
 import static server.io.ConsolePrinter.printMatchDraw;
 import static server.io.ConsolePrinter.printWinInfo;
 
@@ -12,13 +14,12 @@ import static server.io.ConsolePrinter.printWinInfo;
 @Getter
 @Setter
 public class Match {
-    @NonNull
     private Player player1, player2;
-    @NonNull
     private int matchId;
     private Player currentPlayer;
     private boolean isDraw = false;
     private boolean isRunning = true;
+    int playerNumber = 0;
 
 
     private char[][] board = new char[3][3];
@@ -28,12 +29,21 @@ public class Match {
     private static final char PLAYER1_MARK = 'X';
     private static final char PLAYER2_MARK = 'O';
 
-    public Match(@NonNull Player player1, @NonNull Player player2, @NonNull int id) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.matchId = id;
+    public Match(int matchId) {
+        this.matchId = matchId;
         initializeMatch();
+
     }
+    public void addPlayer(Player player){
+        if(playerNumber == 0){
+            player1 = player;
+            playerNumber++;
+        }else if(playerNumber == 1){
+            player2 = player;
+            playerNumber++;
+        }
+    }
+
 
 
 
@@ -130,8 +140,6 @@ public class Match {
                 this.board[i][j] = EMPTY_MARK;
             }
         }
-        player1.setWinner(false);
-        player2.setWinner(false);
     }
 
     private boolean isDraw() {
