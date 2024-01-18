@@ -93,12 +93,12 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
         ArrayList<String> gameOptions = new ArrayList<>();
         if (matches.size() < 1) {
             gameOptions.add("newMatch");
-            gameOptions.add("Brak dostępnych meczy, zostanie swtorzony nowy");
+            gameOptions.add("There is no available matches new one will be created");
         } else if (matches.size() > 0) {
             for (Match match : matches) {
                 if (match.isRunning() && match.getPlayerNumber() < 2) {
                     gameOptions.add("joinMatch");
-                    gameOptions.add("Możesz dołączyć do meczu który już trwa");
+                    gameOptions.add("You can join to running match");
                 }
             }
         }

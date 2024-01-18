@@ -15,6 +15,9 @@ import static client.utils.InputValidator.*;
 
 
 public class Client {
+    // todo wazne rzeczy logi w konsoli serwera i statystyki graczy
+    //todo poprawic getwins bo nie konczy meczy chyba ze skonczy sie plansza
+    // tcpip do obserwowania gry
 
     public static void main(String[] args) {
 
@@ -90,6 +93,7 @@ public class Client {
                     if (checkMatchResult(server, player)) {
                         printWinnerInfo(player);
                     }
+
                 }
             } while (server.isMatchRunning(player.getMatchId()));
         } catch (RemoteException e) {

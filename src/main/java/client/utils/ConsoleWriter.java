@@ -19,9 +19,10 @@ public class ConsoleWriter {
         for (int i = 0; i < board.length; i++) {
             System.out.println();
             for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j] + " ");
+                System.out.print("  "+board[i][j] + " ");
             }
         }
+        System.out.println();
     }
 
     public static void printFieldNumbers() {
@@ -37,6 +38,7 @@ public class ConsoleWriter {
     }
 
     public static void printRunningMatches(ArrayList<Integer> matchesId) {
+        System.out.println("Choose one of running matches by typing its id:");
         for (Integer matchId : matchesId) {
             System.out.println("Match id: " + matchId);
         }
