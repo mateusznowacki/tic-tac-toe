@@ -10,8 +10,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static client.utils.ConsoleWriter.printMenu;
-import static client.utils.ConsoleWriter.printPlayerAddInfo;
+import static client.utils.ConsoleWriter.*;
 import static client.utils.InputValidator.validateArguments;
 
 
@@ -37,15 +36,18 @@ public class Client {
                 switch (input) {
                     case 1: {
                         joinGame(server, player);
-                    }break;
+                    }
+                    break;
 
                     case 2: {
 
-                    }break;
+                    }
+                    break;
 
                     case 3: {
                         System.exit(0);
-                    }break;
+                    }
+                    break;
 
                     default:
                         System.out.println("Invalid input");
@@ -57,6 +59,7 @@ public class Client {
         }
     }
 
+
     private static void joinGame(TicTacToeService server, Player player) {
         try {
             ArrayList<String> gameOptions = server.getGameOptions();
@@ -64,7 +67,7 @@ public class Client {
                 System.out.println(gameOptions.get(1));
                 server.createNewMatch(player.getId());
                 player.setMatchId(server.getMatchId(player.getId()));
-                server.runMatch(player.getId(),player.getMatchId());
+                runGame(server, player);
 
             } else if (gameOptions.get(0).equals("joinMatch")) {
                 System.out.println(gameOptions.get(1));
@@ -73,6 +76,27 @@ public class Client {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void runGame(TicTacToeService server, Player player) {
+        try {
+            do {
+                if (server.isMyTurn(player.getMatchId(), player.getId()) && server.isMatchReady(player.getMatchId())){
+                    printGameBoard(server.getBoard(player.getMatchId()));
+                    makeMove(server, player);
+                }
+            } while (server.isMatchRunning(player.getMatchId()));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void makeMove(TicTacToeService server, Player player) throws RemoteException {
+        System.out.println("It is your turn choose free field");
+        printGameBoard(server.getBoard(player.getMatchId()));
+        printFieldNumbers(server.getBoard(player.getMatchId()));
+
+        server.makeMove(player.getMatchId(), player.getId(), 1, 1);
     }
 
     private static void initializeClient(String[] args, TicTacToeService server) throws RemoteException {

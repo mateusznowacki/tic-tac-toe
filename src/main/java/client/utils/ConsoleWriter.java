@@ -11,6 +11,19 @@ public class ConsoleWriter {
         System.out.println("3. Exit");
     }
 
+    public static void printGameBoard(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            System.out.println();
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+        }
+    }
 
-
+    public static void printFieldNumbers(char[][] board) {
+        System.out.println("  7  8  9");
+        System.out.println("  4  5  6");
+        System.out.println("  1  2  3");
+        System.out.println("Choose field number: ");
+    }
 }
