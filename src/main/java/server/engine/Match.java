@@ -88,43 +88,40 @@ public class Match {
         }
     }
 
-    public void makeMove(int row, int column, int playerId) {
-        if (isValidMove(row, column)) {
-            move(row, column);
+    public void makeMove(int[] coordinates, int playerId) {
+        if (isValidMove(coordinates[0], coordinates[1])) {
+            move(coordinates[0], coordinates[1]);
         }
-//        checkWinner();
-//        if (!player1.isWinner() || !player2.isWinner() || !isDraw) {
-//            notifyNextPlayer();
-//        } else if (isDraw) {
-//            printMatchDraw();
-//        }
+//
     }
 
-    private void notifyNextPlayer() {
-        //TODO: implementacja powiadomienia gracza
-        System.out.println("Next turn.");
-    }
-
-    private void checkWinner() {
+    public int checkWinner() {
         getWinner();
         if (player1.isWinner()) {
             printWinInfo(player1, player2);
+            return player1.getId();
         } else if (player2.isWinner()) {
             printWinInfo(player2, player1);
+            return player2.getId();
         }
+        else if (isDraw) {
+            printMatchDraw(player1, player2);
+            return -1;
+        }
+        return -9999;
     }
 
     private boolean isValidMove(int row, int column) {
         return board[row][column] == EMPTY_MARK;
     }
 
-    private void setCurrentPlayer(int playerId) {
-        if (player1.getId() == playerId) {
-            currentPlayer = player1;
-        } else {
-            currentPlayer = player2;
-        }
-    }
+//    private void setCurrentPlayer(int playerId) {
+//        if (player1.getId() == playerId) {
+//            currentPlayer = player1;
+//        } else {
+//            currentPlayer = player2;
+//        }
+//    }
 
     private void initializeMatch() {
         for (int i = 0; i < 3; i++) {
@@ -144,6 +141,7 @@ public class Match {
                 }
             }
         }
+
         return emptyFields == 0;
     }
 }

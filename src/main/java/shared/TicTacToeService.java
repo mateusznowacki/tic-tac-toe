@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public interface TicTacToeService extends Remote {
 
-    void playWithOtherPlayer(int playerId, int matchId) throws RemoteException;
+    void joinRunningMatch(int playerId, int matchId) throws RemoteException;
 
     ArrayList<String> getGameOptions() throws RemoteException;
 
-    void makeMove(int matchId, int playerId, int row, int column) throws RemoteException;
+    void makeMove(int matchId, int playerId, int [] coordinates) throws RemoteException;
 
 
     int registerPlayer(String name) throws RemoteException;
@@ -20,6 +20,8 @@ public interface TicTacToeService extends Remote {
 
     int getMatchId(int playerId) throws RemoteException;
 
+    boolean isWinner(int matchId, int playerId) throws RemoteException;
+
 
     boolean isMatchRunning(int matchId) throws RemoteException;
 
@@ -28,4 +30,5 @@ public interface TicTacToeService extends Remote {
     char[][] getBoard(int matchId) throws RemoteException;
 
     boolean isMatchReady(int matchId) throws RemoteException;
+    ArrayList<Integer> getRunningMatches() throws RemoteException;
 }

@@ -35,8 +35,8 @@ public class ConsolePrinter {
         System.out.println("Player " + player1.getName() + " has " + player1.getWins() + " wins");
     }
 
-    public static void printMatchDraw() {
-        System.out.println("Match ended with a draw");
+    public static void printMatchDraw(Player player1, Player player2) {
+        System.out.println("Match ended with a draw between " + player1.getName() + " and " + player2.getName());
     }
 
     public static void printPlayerAddInfo(String name, int id) {

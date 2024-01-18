@@ -1,5 +1,9 @@
 package client.utils;
 
+import client.model.Player;
+
+import java.util.ArrayList;
+
 public class ConsoleWriter {
     public static void printPlayerAddInfo(String name, int id) {
         System.out.println(name + " - you joined the server, your id is: " + id);
@@ -20,10 +24,22 @@ public class ConsoleWriter {
         }
     }
 
-    public static void printFieldNumbers(char[][] board) {
+    public static void printFieldNumbers() {
         System.out.println("  7  8  9");
         System.out.println("  4  5  6");
         System.out.println("  1  2  3");
         System.out.println("Choose field number: ");
     }
+
+    public static void printWinnerInfo(Player player1) {
+        System.out.println("You won the match");
+        System.out.println("You have " + player1.getWins() + " wins");
+    }
+
+    public static void printRunningMatches(ArrayList<Integer> matchesId) {
+        for (Integer matchId : matchesId) {
+            System.out.println("Match id: " + matchId);
+        }
+    }
+
 }

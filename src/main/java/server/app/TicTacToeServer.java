@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static server.io.ConsolePrinter.printPlayerAddInfo;
-//todo dodwanie gracza do meczu
 
 public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeService {
     private final List<Player> players;
@@ -18,6 +17,25 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     private int playerId = 0;
     private int matchId = 0;
 
+    @Override
+    public ArrayList<Integer> getRunningMatches() throws RemoteException {
+        ArrayList<Integer> runningMatches = new ArrayList<>();
+        for (Match match : matches) {
+            if (match.isRunning()) {
+                runningMatches.add(match.getMatchId());
+            }
+        }
+        return runningMatches;
+    }
+
+    @Override
+    public boolean isWinner(int matchId, int playerId) throws RemoteException {
+        if (matches.get(matchId).checkWinner() == playerId) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Override
     public boolean isMatchReady(int matchId) {
@@ -29,15 +47,13 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     }
 
     @Override
-    public void playWithOtherPlayer(int id, int matchId) throws RemoteException {
-
+    public void joinRunningMatch(int id, int matchId) throws RemoteException {
+        matches.get(matchId).addPlayer(players.get(id));
     }
 
-
-    // todo dodac sprawdzanie czy gracz jest w meczu
     @Override
-    public void makeMove(int matchId, int playerId, int row, int column) throws RemoteException {
-        matches.get(matchId).makeMove(row, column, playerId);
+    public void makeMove(int matchId, int playerId, int[] coordinates) throws RemoteException {
+        matches.get(matchId).makeMove(coordinates, playerId);
     }
 
     @Override
