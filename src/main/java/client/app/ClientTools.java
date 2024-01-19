@@ -3,6 +3,11 @@ package client.app;
 import client.model.Player;
 import shared.TicTacToeService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -58,6 +63,7 @@ public class ClientTools {
                 }
             } while (server.isMatchRunning(player.getMatchId()));
             if (result == player.getId()) {
+                printGameBoard(server.getBoard(player.getMatchId()));
                 System.out.println("You won the match");
             }
         } catch (RemoteException e) {
@@ -98,6 +104,28 @@ public class ClientTools {
         printPlayerAddInfo(name, player.getId());
     }
 
-    public void observeGame(TicTacToeService server, Player player) {
+    protected void observeGame(TicTacToeService server) {
+        try {
+            Socket socket = new Socket("localhost", 8080);
+
+            System.out.println("Connected to server");
+            System.out.println("Choose match id to observe");
+            printRunningMatches(server.getRunningMatches());
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+            input.readLine();
+            while (server.isNextTurn()) {
+                   String gameInfo = input.readLine();
+                output.println(gameInfo);
+            }
+
+            input.close();
+            output.close();
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

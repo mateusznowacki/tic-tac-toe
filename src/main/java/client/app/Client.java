@@ -1,7 +1,9 @@
 package client.app;
 
 import client.model.Player;
+import server.app.TicTacToeServerObserver;
 import shared.TicTacToeService;
+import shared.TicTacToeServiceObserver;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -25,6 +27,7 @@ public class Client {
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             TicTacToeService server = (TicTacToeService) registry.lookup("TicTacToe");
+            TicTacToeServiceObserver serwerTCP = new TicTacToeServerObserver();
 
             clientTools.initializeClient(args, server);
             Player player = Player.getInstance();
@@ -43,7 +46,7 @@ public class Client {
                     break;
 
                     case 2: {
-                        clientTools.observeGame(server, player);
+                        clientTools.observeGame(server);
                     }
                     break;
 

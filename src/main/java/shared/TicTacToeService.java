@@ -33,4 +33,8 @@ public interface TicTacToeService extends Remote {
     ArrayList<Integer> getRunningMatches() throws RemoteException;
 
     int getWinner(int matchId) throws RemoteException;
+
+    String getCurrentPlayerName(int matchId) throws RemoteException;
+
+    boolean isNextTurn()throws RemoteException;
 }

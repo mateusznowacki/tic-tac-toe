@@ -17,6 +17,15 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     private int playerId = 0;
     private int matchId = 0;
 
+    @Override
+    public boolean isNextTurn() throws RemoteException {
+        return true;
+    }
+
+    @Override
+    public String getCurrentPlayerName(int matchId) throws RemoteException {
+        return matches.get(matchId).getCurrentPlayer().getName();
+    }
 
     @Override
     public int getWinner(int matchId) {
@@ -68,6 +77,8 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     @Override
     public void makeMove(int matchId, int playerId, int[] coordinates) throws RemoteException {
         matches.get(matchId).makeMove(coordinates, playerId);
+        isNextTurn();
+
     }
 
     @Override
