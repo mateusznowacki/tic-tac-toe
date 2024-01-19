@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import server.model.Player;
 
-import static server.io.ConsolePrinter.printMatchDraw;
-import static server.io.ConsolePrinter.printWinInfo;
-
 
 @Getter
 @Setter
@@ -44,38 +41,37 @@ public class Match {
         }
     }
 
-
     public void getWinner() {
         if ((board[0][0] == PLAYER1_MARK && board[0][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK) ||
                 (board[1][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[1][2] == PLAYER1_MARK) ||
                 (board[2][0] == PLAYER1_MARK && board[2][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) ||
                 (board[0][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[2][2] == PLAYER1_MARK) ||
                 (board[2][0] == PLAYER1_MARK && board[1][1] == PLAYER1_MARK && board[0][2] == PLAYER1_MARK)) {
-            isRunning = false;
+            setRunning(false);
             player1.addWin();
             player2.addLoss();
             player1.setWinner(true);
-
+            //return player1.getId();
 
         } else if ((board[0][0] == PLAYER2_MARK && board[0][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK) ||
                 (board[1][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[1][2] == PLAYER2_MARK) ||
                 (board[2][0] == PLAYER2_MARK && board[2][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) ||
                 (board[0][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[2][2] == PLAYER2_MARK) ||
                 (board[2][0] == PLAYER2_MARK && board[1][1] == PLAYER2_MARK && board[0][2] == PLAYER2_MARK)) {
-            isRunning = false;
+            setRunning(false);
             player2.addWin();
             player1.addLoss();
             player2.setWinner(true);
-
+            //return player2.getId();
 
         } else if (!player1.isWinner() && !player2.isWinner() && isDraw()) {
-            isRunning = false;
+            setRunning(false);
             isDraw = true;
             player1.addDraw();
             player2.addDraw();
-
+         //   return -1;
         }
-
+       // return -9999;
     }
 
     private void move(int row, int column) {
@@ -95,33 +91,10 @@ public class Match {
 //
     }
 
-    public int checkWinner() {
-        getWinner();
-        if (player1.isWinner()) {
-            printWinInfo(player1, player2);
-            return player1.getId();
-        } else if (player2.isWinner()) {
-            printWinInfo(player2, player1);
-            return player2.getId();
-        }
-        else if (isDraw) {
-            printMatchDraw(player1, player2);
-            return -1;
-        }
-        return -9999;
-    }
-
     private boolean isValidMove(int row, int column) {
         return board[row][column] == EMPTY_MARK;
     }
 
-//    private void setCurrentPlayer(int playerId) {
-//        if (player1.getId() == playerId) {
-//            currentPlayer = player1;
-//        } else {
-//            currentPlayer = player2;
-//        }
-//    }
 
     private void initializeMatch() {
         for (int i = 0; i < 3; i++) {
@@ -131,7 +104,7 @@ public class Match {
         }
     }
 
-    private boolean isDraw() {
+    public boolean isDraw() {
         //sprawdzam puste pola
         int emptyFields = 0;
         for (int i = 0; i < board.length; i++) {

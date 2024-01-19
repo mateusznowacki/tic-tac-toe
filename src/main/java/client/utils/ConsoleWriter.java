@@ -1,7 +1,5 @@
 package client.utils;
 
-import client.model.Player;
-
 import java.util.ArrayList;
 
 public class ConsoleWriter {
@@ -17,25 +15,23 @@ public class ConsoleWriter {
 
     public static void printGameBoard(char[][] board) {
         for (int i = 0; i < board.length; i++) {
-            System.out.println();
+            System.out.println("  ");
             for (int j = 0; j < board[i].length; j++) {
-                System.out.print("  "+board[i][j] + " ");
+                System.out.print(board[i][j] + " ");
             }
         }
-        System.out.println();
+
     }
 
     public static void printFieldNumbers() {
-        System.out.println("  7  8  9");
-        System.out.println("  4  5  6");
-        System.out.println("  1  2  3");
+        System.out.println("");
+        System.out.println("7  8  9");
+        System.out.println("4  5  6");
+        System.out.println("1  2  3");
         System.out.println("Choose field number: ");
     }
 
-    public static void printWinnerInfo(Player player1) {
-        System.out.println("You won the match");
-        System.out.println("You have " + player1.getWins() + " wins");
-    }
+
 
     public static void printRunningMatches(ArrayList<Integer> matchesId) {
         System.out.println("Choose one of running matches by typing its id:");

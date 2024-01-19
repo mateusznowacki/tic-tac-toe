@@ -17,6 +17,19 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     private int playerId = 0;
     private int matchId = 0;
 
+
+    @Override
+    public int getWinner(int matchId) {
+        if (matches.get(matchId).getPlayer1().isWinner()) {
+            return matches.get(matchId).getPlayer1().getId();
+        } else if (matches.get(matchId).getPlayer2().isWinner()) {
+            return matches.get(matchId).getPlayer2().getId();
+        } else if (matches.get(matchId).isDraw()) {
+            return -1;
+        }
+        return -9999;
+    }
+
     @Override
     public ArrayList<Integer> getRunningMatches() throws RemoteException {
         ArrayList<Integer> runningMatches = new ArrayList<>();
@@ -29,8 +42,9 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     }
 
     @Override
-    public boolean isWinner(int matchId, int playerId) throws RemoteException {
-        if (matches.get(matchId).checkWinner() == playerId) {
+    public boolean isAnyWinner(int matchId) throws RemoteException {
+        matches.get(matchId).getWinner();
+        if (matches.get(matchId).isRunning() == false) {
             return true;
         } else {
             return false;
@@ -101,6 +115,9 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
                     gameOptions.add("You can join to running match");
                 }
             }
+        } else {
+            gameOptions.add("newMatch");
+            gameOptions.add("There is no available matches new one will be created");
         }
         return gameOptions;
     }

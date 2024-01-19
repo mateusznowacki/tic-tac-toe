@@ -20,7 +20,7 @@ public interface TicTacToeService extends Remote {
 
     int getMatchId(int playerId) throws RemoteException;
 
-    boolean isWinner(int matchId, int playerId) throws RemoteException;
+    boolean isAnyWinner(int matchId) throws RemoteException;
 
 
     boolean isMatchRunning(int matchId) throws RemoteException;
@@ -31,4 +31,6 @@ public interface TicTacToeService extends Remote {
 
     boolean isMatchReady(int matchId) throws RemoteException;
     ArrayList<Integer> getRunningMatches() throws RemoteException;
+
+    int getWinner(int matchId) throws RemoteException;
 }
