@@ -13,8 +13,8 @@ public class Match {
     private Player currentPlayer;
     private boolean isDraw = false;
     private boolean isRunning = true;
-
-    int playerNumber = 0;
+    private int turnsCounter = 0;
+   private int playerNumber = 0;
 
 
     private char[][] board = new char[3][3];
@@ -82,6 +82,7 @@ public class Match {
             board[row][column] = PLAYER2_MARK;
             currentPlayer = player1;
         }
+        turnsCounter++;
     }
 
     public void makeMove(int[] coordinates, int playerId) {

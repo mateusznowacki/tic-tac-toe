@@ -16,10 +16,17 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     private final List<Match> matches;
     private int playerId = 0;
     private int matchId = 0;
+    private int turnsCounter = 0;
+
+
 
     @Override
-    public boolean isNextTurn() throws RemoteException {
-        return true;
+    public boolean isNextTurn( int matchId) throws RemoteException {
+        if (matches.get(matchId).getTurnsCounter() > turnsCounter){
+            turnsCounter++;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -77,7 +84,6 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     @Override
     public void makeMove(int matchId, int playerId, int[] coordinates) throws RemoteException {
         matches.get(matchId).makeMove(coordinates, playerId);
-        isNextTurn();
 
     }
 

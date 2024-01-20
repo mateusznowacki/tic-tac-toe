@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static client.utils.ConsoleWriter.*;
 import static client.utils.InputValidator.*;
@@ -109,23 +110,37 @@ public class ClientTools {
             Socket socket = new Socket("localhost", 8080);
 
             System.out.println("Connected to server");
-            System.out.println("Choose match id to observe");
-            printRunningMatches(server.getRunningMatches());
+            System.out.println("Choose match ID to observe");
 
+            // Read available match IDs from the server
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-            input.readLine();
-            while (server.isNextTurn()) {
-                   String gameInfo = input.readLine();
-                output.println(gameInfo);
-            }
+            String availableMatches = input.readLine();
+            System.out.println(availableMatches);
 
+            // Choose a match ID to observe
+            Scanner scanner = new Scanner(System.in);
+            int matchId = Integer.parseInt(scanner.nextLine());
+            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+            output.println(matchId);
+
+
+            // Continue with the loop
+            while (server.isMatchRunning(matchId)) {
+                if (server.isNextTurn(matchId)) {
+                    StringBuilder gameInfo = new StringBuilder();
+                    // Continue reading lines until an empty line is encountered
+                    String line;
+                    while ((line = input.readLine()) != null && !line.isEmpty()) {
+                        gameInfo.append(line).append("\n");
+                        System.out.println(gameInfo);
+                    }
+                }
+            }
             input.close();
             output.close();
             socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
