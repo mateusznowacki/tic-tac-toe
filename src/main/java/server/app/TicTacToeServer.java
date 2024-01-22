@@ -9,7 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static server.io.ConsolePrinter.printPlayerAddInfo;
+import static server.io.ConsolePrinter.*;
 
 public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeService {
     private final List<Player> players;
@@ -37,8 +37,10 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     @Override
     public int getWinner(int matchId) {
         if (matches.get(matchId).getPlayer1().isWinner()) {
+            printWinInfo(matches.get(matchId).getPlayer1(), matches.get(matchId).getPlayer2());
             return matches.get(matchId).getPlayer1().getId();
         } else if (matches.get(matchId).getPlayer2().isWinner()) {
+            printWinInfo(matches.get(matchId).getPlayer2(), matches.get(matchId).getPlayer1());
             return matches.get(matchId).getPlayer2().getId();
         } else if (matches.get(matchId).isDraw()) {
             return -1;
@@ -79,6 +81,8 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
     @Override
     public void joinRunningMatch(int id, int matchId) throws RemoteException {
         matches.get(matchId).addPlayer(players.get(id));
+       printMatchInfo(players.get(0).getName(), players.get(1).getName());
+
     }
 
     @Override
@@ -107,6 +111,7 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
         int matchId = this.matchId++;
         matches.add(new Match(matchId));
         matches.get(matchId).addPlayer(players.get(id));
+     printPairingInfo();
     }
 
     @Override
@@ -136,6 +141,7 @@ public class TicTacToeServer extends UnicastRemoteObject implements TicTacToeSer
             gameOptions.add("newMatch");
             gameOptions.add("There is no available matches new one will be created");
         }
+
         return gameOptions;
     }
 

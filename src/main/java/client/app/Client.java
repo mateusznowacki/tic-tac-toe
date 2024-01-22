@@ -1,7 +1,7 @@
 package client.app;
 
 import client.model.Player;
-import server.app.TicTacToeServerObserver;
+
 import shared.TicTacToeService;
 import shared.TicTacToeServiceObserver;
 
@@ -9,17 +9,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import static client.utils.ConsoleWriter.*;
-import static client.utils.InputValidator.*;
+
 
 
 public class Client {
-    // todo wazne rzeczy logi w konsoli serwera i statystyki graczy
 
-    // todo tcpip do obserwowania gry
 
     public static void main(String[] args) {
         ClientTools clientTools = new ClientTools();
@@ -27,7 +25,7 @@ public class Client {
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             TicTacToeService server = (TicTacToeService) registry.lookup("TicTacToe");
-            TicTacToeServiceObserver serwerTCP = new TicTacToeServerObserver();
+         //   TicTacToeServiceObserver serwerTCP = new TicTacToeServerObserver();
 
             clientTools.initializeClient(args, server);
             Player player = Player.getInstance();

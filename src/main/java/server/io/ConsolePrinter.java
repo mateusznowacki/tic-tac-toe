@@ -18,30 +18,18 @@ public class ConsolePrinter {
         System.out.println("Match started between " + player1 + " and " + player2);
     }
 
-    public static void printMatchEndInfo(String player1, String player2) {
-        System.out.println("Match ended between " + player1 + " and " + player2);
+    public static void printPairingInfo() {
+        System.out.println("Pairing between players");
     }
 
-    public static void printPairingInfo(String player1, String player2) {
-        System.out.println("Pairing between " + player1 + " and " + player2);
-    }
-
-    public static void printPlayerInfo(String name) {
-        System.out.println("Player " + name + " joined the server");
-    }
 
     public static void printWinInfo(Player player1, Player player2) {
         System.out.println("Player " + player1.getName() + " won the match against " + player2.getName());
         System.out.println("Player " + player1.getName() + " has " + player1.getWins() + " wins");
     }
 
-    public static void printMatchDraw(Player player1, Player player2) {
-        System.out.println("Match ended with a draw between " + player1.getName() + " and " + player2.getName());
-    }
-
     public static void printPlayerAddInfo(String name, int id) {
         System.out.println("Player " + name + " joined the server, his id:" + id);
     }
-
 
 }
